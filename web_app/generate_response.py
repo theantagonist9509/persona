@@ -7,11 +7,11 @@ model = AutoModelForCausalLM.from_pretrained(model_name,torch_dtype=torch.float3
 
 def genereate_response(prompt):
     #Adding some safeguards
-    prompt += " Reply like you are giving therapy in English"
+    prompt += ". Respond in english"
 
     inputs = tokenizer(prompt,return_tensors="pt").to("cpu")
     with torch.no_grad():
-        output = model.generate(**inputs,max_new_tokens= 64)
+        output = model.generate(**inputs,max_new_tokens= 64,temperature=0.1)
     
 
     response = tokenizer.decode(output[0],skip_special_tokens=True)
