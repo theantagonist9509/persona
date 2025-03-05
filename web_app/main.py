@@ -1,7 +1,19 @@
 import streamlit as st
 from generate_response import genereate_response 
 
-st.title("Personabot")
+#Custom CSS Styling
+st.markdown(
+"""
+
+""",unsafe_allow_html=True
+)
+
+
+
+#A nice friendly sidebar
+with st.sidebar:
+    st.title("Personabot")
+    st.markdown("Please feel free to discuss with our helpful,interactive chatbot. Your conversations are private")
 
 #Initialize chat history
 #We remember past inputs as well
