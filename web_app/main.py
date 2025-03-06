@@ -1,12 +1,19 @@
 import streamlit as st
 from generate_response import genereate_response 
 
+def generate_history(messages):
+    history = []
+    for message in messages:
+        history.append((message["role"],message["content"]))
+    return history
+
 #Custom CSS Styling
 st.markdown(
 """
 
 """,unsafe_allow_html=True
 )
+
 
 
 
@@ -26,16 +33,19 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 
+
+
 #React to user input
 if prompt:= st.chat_input("Tell me about yourself"):
     #Display user message in chat message container
     st.chat_message("user").markdown(prompt)
     #Add it to the chat 
     st.session_state.messages.append({"role":"user","content":prompt})
+    history = generate_history(st.session_state.messages)
 
-    response = genereate_response(prompt)
+    response = genereate_response(prompt,history)
 
     with st.chat_message("assistant"):
         st.markdown(response)
     #Add message to chat history
-    st.session_state.messages.append({"role":"assistant","content":response})
+    st.session_state.messages.append({"role":"ai","content":response})

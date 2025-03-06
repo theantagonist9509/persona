@@ -7,13 +7,19 @@ llm = ChatOllama(
 
 
 
-def genereate_response(prompt):
+def genereate_response(prompt,history):
     messages = [
         (
             "system",
             "You are a therapeutic bot who wants to know more about the patient's mental state"
         ),  
-        ("human",prompt)
+      
+        
     ]
+    #Add chat history
+    messages.extend(history)
+    #Add current prompt
+    messages.append(("user",prompt))
+
     msg = llm.invoke(messages)
     return msg.content
