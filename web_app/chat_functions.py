@@ -1,5 +1,7 @@
 from ollama import Client
 import streamlit as st
+import json
+import os
 
 client = Client(host='http://localhost:11434')
 
@@ -19,11 +21,11 @@ def handle_prompt(prompt):
         )
         
         for chunk in client.generate(
-            # suvraryan pls dont change to 3.1; i dont have enough ram to run it
+            
             model='llama3.2',
             prompt=history + '\nassistant: ',
             stream=True,
-            options={'temperature': 0.5}
+            options={'temperature': 0.1}
         ):
             token = chunk.get('response', '')
             full_response += token
@@ -35,3 +37,13 @@ def handle_prompt(prompt):
 
     st.session_state.state = 'chat'
     st.rerun()
+
+
+#Save chat logs
+def save_chat(history,destination):
+    # Create the file if it does not exist
+    if not os.path.exists(destination):
+        with open(destination, "w") as f:
+            f.write("")  # Create an empty file
+    with open(destination,"w") as f:
+        json.dump(history,f)

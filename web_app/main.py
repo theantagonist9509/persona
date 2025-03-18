@@ -1,5 +1,10 @@
 import streamlit as st
-from functions import *
+from chat_functions import *
+from datetime import datetime
+import os
+
+
+
 
 # Configure page
 st.set_page_config(
@@ -70,8 +75,8 @@ if 'messages' not in st.session_state:
         'role': 'system',
         'content':
             "You are a therapeutic bot who wants to know more about the patient's mental state."
-            "If you believe that the student needs help tell him/her to contact the college counselor (+91 98555 22123)."
-            "Be as freindly as possible.",
+            "If you believe that the student really needs help tell him/her to contact the college counselor (+91 98555 22123).Give this information if the user is really troubled or asks for this information"
+            "Be as freindly as possible and ask follow up questions",
     }]
 
 # Defines UI
@@ -82,13 +87,25 @@ if 'state' not in st.session_state:
 if 'callbacks' not in st.session_state:
     st.session_state.callbacks = []
 
+#User details (from login)
+if 'user' not in st.session_state:
+    st.session_state.user = "temporary"
+    os.makedirs("chat_history/"+st.session_state.user,exist_ok=True)
+
+#Where to store the files
+if 'chat_dest' not in st.session_state:
+    dest_path = "chat_history/"+st.session_state.user
+    num_files = len([f for f in os.listdir(dest_path) if os.path.isfile(os.path.join(dest_path, f))])
+
+    st.session_state.chat_dest = dest_path+"/chat_log"+str(num_files)+".json" 
 
 
 # Display previous messages
 for msg in st.session_state.messages[1:]:
     with st.chat_message(msg['role']):
         st.markdown(msg['content'])
-        
+    #Save chat history
+    save_chat(st.session_state.messages,st.session_state.chat_dest)
 
 
 # Initial prompt suggestions TODO generate these using the llm itself
