@@ -2,9 +2,16 @@ import streamlit as st
 from chat_functions import *
 from datetime import datetime
 import os
+import mysql.connector
 
-
-
+#The connector
+connector = mysql.connector.connect(
+    host="localhost",
+    user="test",
+    password="password",
+    database="persona"
+    )
+cursor = connector.cursor()
 
 # Configure page
 st.set_page_config(
@@ -88,24 +95,38 @@ if 'callbacks' not in st.session_state:
     st.session_state.callbacks = []
 
 #User details (from login)
-if 'user' not in st.session_state:
-    st.session_state.user = "temporary"
-    os.makedirs("chat_history/"+st.session_state.user,exist_ok=True)
+#UserID
+if "userID" not in st.session_state:
+    st.session_state.userID = 0
 
-#Where to store the files
-if 'chat_dest' not in st.session_state:
-    dest_path = "chat_history/"+st.session_state.user
-    num_files = len([f for f in os.listdir(dest_path) if os.path.isfile(os.path.join(dest_path, f))])
+#Conversation number
+if "conversationID" not in st.session_state:
+    cursor.execute("SELECT MAX(conversationID) from conversations")
+    id = cursor.fetchone()
 
-    st.session_state.chat_dest = dest_path+"/chat_log"+str(num_files)+".json" 
+    
+    if(id[0]==None):
+        st.session_state.conversationID = 0
+    else:
+        st.session_state.conversationID = id[0]+1
 
+    time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #Create new conversation and user - conversation relation
+    query = "INSERT INTO conversations values(%s,\"\",1,%s,\"\")"
+    values = [st.session_state.conversationID,time_stamp]
+    cursor.execute(query,values)
+    connector.commit()
+
+    query = "INSERT INTO userConversation values(%s,%s)"
+    values = [st.session_state.userID,st.session_state.conversationID]
+    cursor.execute(query,values)
+    connector.commit()
 
 # Display previous messages
 for msg in st.session_state.messages[1:]:
     with st.chat_message(msg['role']):
         st.markdown(msg['content'])
-    #Save chat history
-    save_chat(st.session_state.messages,st.session_state.chat_dest)
+   
 
 
 # Initial prompt suggestions TODO generate these using the llm itself
