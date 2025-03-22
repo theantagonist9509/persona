@@ -97,10 +97,10 @@ with st.sidebar:
     if st.session_state.sound == 1:
         option = st.selectbox(
     "Choose an option:",
-    ["en-US-JennyNeural",	
+    ["en-US-AndrewNeural",
+    "en-US-JennyNeural",	
     "en-US-AriaNeural",	
     "en-US-GuyNeural",	
-    "en-US-AndrewNeural",
     "en-GB-RyanNeural",
     "en-IN-NeerjaNeural",
     "en-IN-PrabhatNeural"],disabled=st.session_state.state == "gen"    
@@ -109,16 +109,7 @@ with st.sidebar:
         st.markdown("Changes will take effect from the next conversation")
 
 
-# Initialize session_state
-if 'messages' not in st.session_state:
-    st.session_state.messages = [{
-        'role': 'system',
-        'content':
-            "Name of the user is John Doe. "
-            "You are a therapeutic bot who wants to know more about the patient's mental state."
-            "If you believe that the student really needs help tell him/her to contact the college counselor (+91 98555 22123).Give this information if the user is really troubled or asks for this information"
-            "Be as freindly as possible and ask follow up questions",
-    }]
+
 
 
 
@@ -127,11 +118,27 @@ if 'callbacks' not in st.session_state:
     st.session_state.callbacks = []
 
 #User details (from login)
-#UserID
+#Query and values
 if "userID" not in st.session_state:
     st.session_state.userID = random.randint(0,2)
+    query = ("SELECT name from users where uID = %s")
+    values = [st.session_state.userID]
+    cursor.execute(query,values)
+    name = cursor.fetchone()[0]
+    st.session_state.name = name
 
+# Initialize session_state
+if 'messages' not in st.session_state:
 
+    
+    st.session_state.messages = [{
+        'role': 'system',
+        'content':
+            f"The name of the user is {st.session_state.name} "
+            "You are a therapeutic bot who wants to know more about the user's mental state."
+            "If you believe that the student really needs help tell him/her to contact the college counselor (+91 98555 22123).Give this information if the user is really troubled or asks for this information"
+            "Be as friendly as possible and ask follow up questions"
+    }]
 
 #Conversation number
 if "conversationID" not in st.session_state:

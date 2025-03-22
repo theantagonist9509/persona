@@ -1,4 +1,4 @@
-from ollama import Client
+from langchain_community.llms.ollama import Ollama
 import streamlit as st
 import edge_tts
 import asyncio
@@ -6,8 +6,8 @@ from datetime import datetime
 import mysql.connector
 
 #The client for ollama
-client = Client(host='http://localhost:11434')
-
+llm = Ollama(model="hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K",temperature=0.1)
+#ollama run hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K
 
 
 #Generate speech
@@ -73,14 +73,8 @@ def handle_prompt(prompt):
             for msg in st.session_state.messages
         )
         
-        for chunk in client.generate(
-            
-            model='hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K',
-            prompt=history + '\nassistant: ',
-            stream=True,
-            options={'temperature': 0.1}
-        ):
-            token = chunk.get('response', '')
+        response = llm.stream(history + '\nassistant: ')
+        for token in response:
             full_response += token
             response_placeholder.markdown(full_response + '▌') # Typing indicator
 
