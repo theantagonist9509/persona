@@ -4,6 +4,9 @@ from datetime import datetime
 import os
 import mysql.connector
 
+#FOR TESTING ONLY....
+import random
+
 #The connector
 connector = mysql.connector.connect(
     host="localhost",
@@ -55,9 +58,21 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
 # Content header
 st.title('🌿 Persona')
 st.write('Talk to our therapeutic chatbot.')
+
+
+# Defines UI
+if 'state' not in st.session_state:
+    st.session_state.state = 'init' # 'init' | 'chat' | 'gen'
+#Should we generate sound
+if "sound" not in st.session_state:
+    st.session_state.sound = 1
+#Sound of the user
+if "voice" not in st.session_state:
+    st.session_state.voice = "en-US-AndrewNeural"
 
 # Sidebar with information
 with st.sidebar:
@@ -73,7 +88,25 @@ with st.sidebar:
 
     _Made by Team Draco 🐉_
     ''')
+  
+    if st.checkbox("🔊 AUDIO",disabled=st.session_state.state == "gen"):
+        st.session_state.sound = 1
+    else:
+        st.session_state.sound = 0
 
+    if st.session_state.sound == 1:
+        option = st.selectbox(
+    "Choose an option:",
+    ["en-US-JennyNeural",	
+    "en-US-AriaNeural",	
+    "en-US-GuyNeural",	
+    "en-US-AndrewNeural",
+    "en-GB-RyanNeural",
+    "en-IN-NeerjaNeural",
+    "en-IN-PrabhatNeural"],disabled=st.session_state.state == "gen"    
+    )
+        st.session_state.voice = option
+        st.markdown("Changes will take effect from the next conversation")
 
 
 # Initialize session_state
@@ -81,14 +114,13 @@ if 'messages' not in st.session_state:
     st.session_state.messages = [{
         'role': 'system',
         'content':
+            "Name of the user is John Doe. "
             "You are a therapeutic bot who wants to know more about the patient's mental state."
             "If you believe that the student really needs help tell him/her to contact the college counselor (+91 98555 22123).Give this information if the user is really troubled or asks for this information"
             "Be as freindly as possible and ask follow up questions",
     }]
 
-# Defines UI
-if 'state' not in st.session_state:
-    st.session_state.state = 'init' # 'init' | 'chat' | 'gen'
+
 
 # Useful when actiions require a UI update and then function a call (like a button click)
 if 'callbacks' not in st.session_state:
@@ -97,11 +129,13 @@ if 'callbacks' not in st.session_state:
 #User details (from login)
 #UserID
 if "userID" not in st.session_state:
-    st.session_state.userID = 0
+    st.session_state.userID = random.randint(0,2)
+
+
 
 #Conversation number
 if "conversationID" not in st.session_state:
-    cursor.execute("SELECT MAX(conversationID) from conversations")
+    cursor.execute("SELECT MAX(cID) from conversations")
     id = cursor.fetchone()
 
     
@@ -112,15 +146,19 @@ if "conversationID" not in st.session_state:
 
     time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     #Create new conversation and user - conversation relation
-    query = "INSERT INTO conversations values(%s,\"\",1,%s,\"\")"
+    query = "INSERT INTO conversations values(%s,%s)"
     values = [st.session_state.conversationID,time_stamp]
     cursor.execute(query,values)
     connector.commit()
 
-    query = "INSERT INTO userConversation values(%s,%s)"
+    query = "INSERT INTO usercon values(%s,%s)"
     values = [st.session_state.userID,st.session_state.conversationID]
     cursor.execute(query,values)
     connector.commit()
+
+
+
+
 
 # Display previous messages
 for msg in st.session_state.messages[1:]:
@@ -149,6 +187,10 @@ if st.session_state.state == 'init':
             st.session_state.state = 'gen'
             st.session_state.callbacks.append(lambda: handle_prompt(prompt))
             st.rerun()
+
+#Voice chat
+if len(st.session_state.messages)>1 and st.session_state.state != 'gen' and st.session_state.sound == 1:
+    st.audio("sound_buffer/speech.mp3", format="audio/mp3")
 
 # Chat input
 if prompt := st.chat_input('How are you feeling today?', disabled=(st.session_state.state not in ['init', 'chat'])):

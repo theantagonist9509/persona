@@ -1,15 +1,24 @@
 from ollama import Client
 import streamlit as st
-import json
-import os
+import edge_tts
+import asyncio
+from datetime import datetime
 import mysql.connector
 
 #The client for ollama
 client = Client(host='http://localhost:11434')
 
 
+
+#Generate speech
+async def generate_speech(text):
+    output_file = "sound_buffer/speech.mp3"
+    tts = edge_tts.Communicate(text,st.session_state.voice)
+    await tts.save(output_file)
+    
+
 #Save chat logs
-def save_chat(content:str):
+def save_chat(role:str,content:str):
     #The connector
     connector = mysql.connector.connect(
         host="localhost",
@@ -19,21 +28,33 @@ def save_chat(content:str):
     )
     cursor = connector.cursor() 
 
+    #Get last message ID
+    cursor.execute("SELECT MAX(mID) from Messages")
+    id = cursor.fetchone()
 
-    query1 = "SELECT content from conversations where conversationID = %s"
-    value1 = [st.session_state.conversationID,]
-    cursor.execute(query1,value1)
+    messageID = 0
+    if(id[0]==None):
+        messageID = 0
+    else:
+        messageID = id[0]+1
 
-    previous_content = str(cursor.fetchall()[0][0])
-    print("PREVIOUS ",previous_content)
-    final_content = previous_content+content
-
-    query2 = "UPDATE conversations SET content = %s,processed = 0 where conversationID = %s"
-    value2 = [final_content,st.session_state.conversationID]
-    cursor.execute(query2,value2)
+    time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    #Create new conversation and user - conversation relation
+    query = "INSERT INTO messages values(%s,%s,%s,%s)"
+    values = [messageID,role,content,time_stamp]
+    cursor.execute(query,values)
     connector.commit()
-    cursor.close()
-    connector.close()
+
+    query = "INSERT INTO conmess values(%s,%s)"
+    values = [st.session_state.conversationID,messageID]
+    cursor.execute(query,values)
+    connector.commit()
+
+    #Edit last accessed
+    query = "UPDATE conversations SET lastInteraction = %s where cID = %s"
+    values = [time_stamp,st.session_state.conversationID]
+    cursor.execute(query,values)
+    connector.commit()
     
 
 
@@ -41,7 +62,7 @@ def handle_prompt(prompt):
     # Add user message to history
     st.chat_message('user').markdown(prompt)
     st.session_state.messages.append({'role': 'user', 'content': prompt})
-    save_chat(str("\n user: "+prompt))
+    save_chat("user",prompt)
     # Generate and stream response
     with st.chat_message('assistant'):
         response_placeholder = st.empty()
@@ -54,7 +75,7 @@ def handle_prompt(prompt):
         
         for chunk in client.generate(
             
-            model='llama3.2',
+            model='hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K',
             prompt=history + '\nassistant: ',
             stream=True,
             options={'temperature': 0.1}
@@ -66,7 +87,10 @@ def handle_prompt(prompt):
         response_placeholder.markdown(full_response)
 
     st.session_state.messages.append({'role': 'assistant', 'content': full_response})
-    save_chat(str("\n assistant: "+full_response))
+    save_chat("assistant",full_response)
+
+
+    asyncio.run(generate_speech(full_response))
 
     st.session_state.state = 'chat'
     st.rerun()
