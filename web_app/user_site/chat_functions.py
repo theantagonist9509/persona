@@ -5,7 +5,7 @@ import asyncio
 from datetime import datetime
 import mysql.connector
 
-#The client for ollama
+#Ollama
 llm = Ollama(model="hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K",temperature=0.1)
 #ollama run hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K
 
@@ -40,7 +40,7 @@ def save_chat(role:str,content:str):
 
     time_stamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     #Create new conversation and user - conversation relation
-    query = "INSERT INTO messages values(%s,%s,%s,%s)"
+    query = "INSERT INTO messages values(%s,%s,%s,NULL,%s)"
     values = [messageID,role,content,time_stamp]
     cursor.execute(query,values)
     connector.commit()
@@ -72,7 +72,7 @@ def handle_prompt(prompt):
             f'{msg["role"].title()}: {msg["content"]}'
             for msg in st.session_state.messages
         )
-        
+       
         response = llm.stream(history + '\nassistant: ')
         for token in response:
             full_response += token
