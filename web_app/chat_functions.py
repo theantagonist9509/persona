@@ -12,7 +12,7 @@ llm = Ollama(model="hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K",temperature=0
 
 #Generate speech
 async def generate_speech(text):
-    output_file = "sound_buffer/speech.mp3"
+    output_file = st.session_state.sound_file
     tts = edge_tts.Communicate(text,st.session_state.voice)
     await tts.save(output_file)
     

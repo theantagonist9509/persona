@@ -89,7 +89,7 @@ with st.sidebar:
     _Made by Team Draco 🐉_
     ''')
   
-    if st.checkbox("🔊 AUDIO",disabled=st.session_state.state == "gen"):
+    if st.checkbox("🔊 AUDIO",disabled=st.session_state.state == "gen",value=True):
         st.session_state.sound = 1
     else:
         st.session_state.sound = 0
@@ -126,6 +126,9 @@ if "userID" not in st.session_state:
     cursor.execute(query,values)
     name = cursor.fetchone()[0]
     st.session_state.name = name
+    st.session_state.sound_file = "sound_files/sound"+str(st.session_state.userID)+".mp3"
+    #Create a new file
+    open(st.session_state.sound_file, "w")
 
 # Initialize session_state
 if 'messages' not in st.session_state:
@@ -197,7 +200,7 @@ if st.session_state.state == 'init':
 
 #Voice chat
 if len(st.session_state.messages)>1 and st.session_state.state != 'gen' and st.session_state.sound == 1:
-    st.audio("sound_buffer/speech.mp3", format="audio/mp3")
+    st.audio(st.session_state.sound_file, format="audio/mp3")
 
 # Chat input
 if prompt := st.chat_input('How are you feeling today?', disabled=(st.session_state.state not in ['init', 'chat'])):
