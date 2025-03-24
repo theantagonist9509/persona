@@ -1,0 +1,15 @@
+cryptography
+chromadb
+
+langchain-core
+langchain-community
+langchain-ollama
+langchain-chroma
+langchain-huggingface
+langgraph
+
+mysql-connector-python
+sentence-transformers
+streamlit
+
+edge-tts
