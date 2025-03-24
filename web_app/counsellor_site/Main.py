@@ -34,7 +34,7 @@ if "uID" not in st.session_state:
     cursor.execute(query,values)
     name = cursor.fetchone()[0]
     st.session_state.name = name
-    st.session_state.trend = "depression"
+    st.session_state.trend = "Normal"
 
 
 # Content header
@@ -135,6 +135,8 @@ rows = cursor.fetchall()
 
 selection = []
 for row in rows:
+    if(row[0] is None):
+        continue
     selection.append(row[0])
 
 trend = st.selectbox("Trend to Follow",selection)
@@ -167,4 +169,7 @@ if(len(x)>=3):
 fig,ax = plt.subplots()
 ax.plot(x_smooth,y_smooth,color="red")
 ax.fill_between(x_smooth, y_smooth, alpha=0.3, color='red')
+
+ax.set_xlabel("Conversation ID")
+ax.set_ylabel("Frequency")
 st.pyplot(fig)

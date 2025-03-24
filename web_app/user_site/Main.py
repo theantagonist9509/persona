@@ -47,7 +47,6 @@ st.markdown(
 )
 
 
-st.session_state.conversationID = 1
 
 
 # Defines UI
@@ -78,7 +77,7 @@ else:
     st.title(f"🌿 What's up, {st.session_state.user['name'].split()[0]}?")
     st.text("") # Vertical spacing
     
-    # TODO generate these using the llm itself
+ 
     if st.session_state.state == 'init':
         buttons = {
             'Breathing Exercises':  'Give me some breathing excercises that I can use to de-stress',

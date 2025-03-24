@@ -88,6 +88,30 @@ def sign_in_ui():
                 ):
                     st.session_state.state = 'init'
                     st.session_state.user = result
+                    
+                    query = "SELECT MAX(cID) from conversations"
+                    cursor.execute(query)
+                    num = 1
+
+                    result = cursor.fetchone()
+        
+                    if(result is None):
+                        num = 1 
+                    else:
+                        num =result["MAX(cID)"]+1
+
+                    st.session_state.conversationID = num
+
+                    query = "INSERT INTO conversations values (%s,CURRENT_TIMESTAMP())"
+                    values = [num]
+                    cursor.execute(query,values)
+                    conn.commit()
+
+                    query  = "INSERT INTO usercon values (%s,%s)"
+                    values = [st.session_state.user["uID"],st.session_state.conversationID]
+                    cursor.execute(query,values)
+                    conn.commit()
+
                     st.success("Sign-in successful!")
                     time.sleep(2)
                     st.rerun()

@@ -95,12 +95,13 @@ while True:
         mID = row[0]
         content = row[1]
 
+        #print the content
+        print("Content: ",content)
         #Check if we can find an issue
         shouldCheck = sentiment_present(content)
 
-        #print the content
-        print("Content: ",content)
-        prediction = "Normal"
+       
+        prediction = "normal"
         if(shouldCheck):
             prediction = sentiment(content)
 
