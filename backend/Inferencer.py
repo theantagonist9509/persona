@@ -14,26 +14,6 @@ tokenizer = AutoTokenizer.from_pretrained("tahaenesaslanturk/mental-health-class
 model = AutoModelForSequenceClassification.from_pretrained("tahaenesaslanturk/mental-health-classification-v0.1")
 
 
-#Function to check if context suggests a potential mental condition
-def sentiment_present(content:str):
-    prompt = "You will be given a message from a student seeking mental assistance. Reply yes if you think there is a mental or physical issue in the statement. Otherwise reply no. Only reply yes or no. user input:-  "
-   
-    prompt += content
-
-    full_response = ""
-    response = llm.stream(prompt)
-    for token in response:
-        full_response += token
-        
-    #Get the first word
-    token = full_response.split()[0]
-    
-    #Only return 0 if we are sure there is no issue
-    if(token.lower()=="no"):
-        return False
-    else:
-        return True
-
 #Analyze the sentiment
 #Function to check if context suggests a potential mental condition
 def sentiment_present(content:str):
@@ -120,7 +100,7 @@ while True:
 
         #print the content
         print("Content: ",content)
-        prediction = "None"
+        prediction = "Normal"
         if(shouldCheck):
             prediction = sentiment(content)
 
