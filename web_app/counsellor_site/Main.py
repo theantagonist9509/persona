@@ -36,6 +36,9 @@ if "uID" not in st.session_state:
     st.session_state.name = name
     st.session_state.trend = "Normal"
 
+if "linear" not in st.session_state:
+    st.session_state.linear = 0
+
 
 # Content header
 st.title('🌿 Persona Counsellor Dashboard')
@@ -139,14 +142,33 @@ for row in rows:
         continue
     selection.append(row[0])
 
+#Trend to follow
 trend = st.selectbox("Trend to Follow",selection)
 #Update trend
 if(trend!=st.session_state.trend):
     st.session_state.trend = trend
     st.rerun()
 
+option = 0
+#Curve is smooth or not
+if st.checkbox("📈 Linear (May be more accurate)"):
+    option = 1
+else:
+    option = 0
+
+
+if(option != st.session_state.linear):
+    st.session_state.linear = option
+    st.rerun()
+
+k = 2
+if(st.session_state.linear == 1):
+    k =1
+else:
+    k=3
+
 #Get graph
-query = "SELECT count(*) from users,usercon,conversations,conmess,messages where users.uID = usercon.uID and usercon.cID =conversations.cID and conversations.CID = conmess.cID and conmess.mID = messages.mID and users.uID = %s and sentiment=%s group by conversations.cID order by conversations.lastInteraction;"
+query = "SELECT count(*),conversations.lastInteraction from users,usercon,conversations,conmess,messages where users.uID = usercon.uID and usercon.cID =conversations.cID and conversations.CID = conmess.cID and conmess.mID = messages.mID and users.uID = %s and sentiment=%s group by conversations.cID order by conversations.lastInteraction;"
 values = [st.session_state.uID,st.session_state.trend]
 cursor.execute(query,values)
 x = []
@@ -154,22 +176,41 @@ y = []
 i=0
 for row in cursor.fetchall():
     y.append(row[0])
-    x.append(i)
+    x.append(row[1])
     i+=1
 
-#Smoothen the curve
-x_smooth =x
-y_smooth =y
-if(len(x)>=3):
-    spl = make_interp_spline(x,y,k=2)
-    x_smooth = np.linspace(min(x),max(x),100)
-    y_smooth = spl(x_smooth)
+x=pd.to_datetime(x)
+y = np.array(y)
+
+if len(x)>3:
+    x_numeric  = x.view('int64')//10**9 #Convert date to numeric
+    spl = make_interp_spline(x_numeric,y,k)
+    x_smooth_numeric = np.linspace(x_numeric.min(),x_numeric.max(),50)
+    y_smooth = spl(x_smooth_numeric)
+    x_smooth = pd.to_datetime(x_smooth_numeric,unit='s') #Convert back to datetime
+    
+    #Clip y values
+    y_smooth = np.clip(y_smooth,0,np.max(y_smooth))
+    
+    #Normalize y smooth
+    y_smooth_min,y_smooth_max = np.min(y_smooth),np.max(y_smooth)
+    y_smooth = (((y_smooth - y_smooth_min))/(y_smooth_max-y_smooth_min))*np.max(y)
+
+else:
+    x_smooth,y_smooth = x,y
+
+
 
 #Draw the plot
 fig,ax = plt.subplots()
 ax.plot(x_smooth,y_smooth,color="red")
 ax.fill_between(x_smooth, y_smooth, alpha=0.3, color='red')
+#Reduce font size
+ax.tick_params(axis='x', rotation=45, labelsize=8)  # Decrease font size
+ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b %d'))  # Format as "Date Day"
 
-ax.set_xlabel("Conversation ID")
+
+
+ax.set_xlabel("Date")
 ax.set_ylabel("Frequency")
 st.pyplot(fig)
