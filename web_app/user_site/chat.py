@@ -43,7 +43,7 @@ def save_chat(role: str, content: str):
 def handle_prompt(prompt):
     st.chat_message('user').markdown(prompt)
     st.session_state.messages.append(HumanMessage(content=prompt))
-    save_chat("user",prompt)
+    save_chat("user", prompt)
     
     with st.chat_message('assistant'):
         response_placeholder = st.empty()

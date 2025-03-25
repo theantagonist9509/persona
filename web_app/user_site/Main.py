@@ -80,9 +80,9 @@ else:
  
     if st.session_state.state == 'init':
         buttons = {
-            'Breathing Exercises':  'Give me some breathing excercises that I can use to de-stress',
-            'Meditation Tricks':    'Give me some practical meditation tricks',
-            'Tips to Focus':        'GIve me some practical tips to focus',
+            'Tips for Anxiety':     'Give me practical tips to deal with anxiety.',
+            'Issues with Sleeping': 'Give me practical advice on improving my sleep quality and sleep schedule.',
+            'Eating Disorders':     'Tell me about eating disorders and how to tackle them.',
         }
     
         cols = st.columns([2] * len(buttons.keys()))
