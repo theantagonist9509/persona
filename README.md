@@ -1,7 +1,7 @@
 # 🌿 **PersonaBot**  
 An interactive AI-powered mental wellness platform built by **Team Draco 🐉** for the **"PersonaBot: AI-Driven User Profiling"** problem statement at **ICTC 3.0**.  
 
-## Setup
+## 🔧 Setup
 
 - Run `pip install -r requirements.txt`
 - Setup the MySQL database `Outputs/Databases/database.sql`
