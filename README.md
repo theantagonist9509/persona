@@ -47,9 +47,29 @@ The platform's **UI is designed with real feedback** from **IIT Patna students**
 - [Mental Health Classification Model v0.1](https://huggingface.co/tahaenesaslanturk/mental-health-classification-v0.1)  
 - **LLaMA 3.1**  
 
+## Profile Generation Pipeline
 
+We implement a precise yet efficient user profiling system for the therapeutic chatbot, utilizing a unique citation generation mechanism.
 
-## Effective profiling mechanism
+### Key Features:
+- Retrieves unprofiled user messages from the MySQL database
+- Updates existing user profiles with information from unprocessed messages using a summarization agent (LLM)
+- Implements a unique citation generation mechanism that employs semantic similarity scores to propagate citations across profile updates over time
+
+### Citation Generation Mechanism:
+1. Summarizer Agent:
+   - Employs a ChatOllama model to summarize user messages while augmenting them with the existing profile
+   - Generates concise, non-repetitive summaries of all user information till-date
+
+2. Cosine Similarity (using ChromaDB):
+   - Uses HuggingFace embeddings (sentence-transformers/all-mpnet-base-v2) for semantic similarity scoring
+   - Stores embeddings from both the persistent profile, and the unprofiled messages in in-memory ChromaDB collections for efficient querying
+   - Propagates chat message citations by finding the most similar messages to each profile point
+
+### Usage
+- Automatically updates user profiles based on new, unprofiled messages
+- Marks profiled messages in the database to prevent redundant updates
+- Can be run as a standalone script to update profiles for all users
 
 ## **Counsellor Dashboard**  
 
@@ -66,7 +86,9 @@ Generates **concise summaries** for each user, assisting counselors in the **dia
 ✅ **Psychological Trends & Graphs**  
 Displays **real-time visualizations** of the individual’s **mental health trends**, allowing experts to track psychological patterns.  
 
-### **Dashboard Preview**  
+### **Dashboard Preview** 
+![image](https://github.com/user-attachments/assets/fcc45748-3b7e-4935-8b70-9a35f8623b26)
+
 ![Dashboard Overview](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)  
 
 ![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)  
