@@ -36,7 +36,16 @@ An interactive AI-powered mental wellness platform. Made by Team Draco 🐉 for 
 
 (Models:-https://huggingface.co/tahaenesaslanturk/mental-health-classification-v0.1 , llama 3.1) 
 
+## Effective profiling mechanism
 
+## Counsellor Dashboard
+1) An interactive counsellor dashboard to help mental-wellness experts track the overall well-being of the student community
+2) Gives a profile for each user along with citations to help the counsellor better understand the student
+3) Generates a short summary for each user to assist in diagnosis
+4) Displays graphs showing the overall mental state and psycological trends
+   ![image](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)
+
+   <img width="959" alt="image" src="https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169" />
 
 
 
