@@ -1,6 +1,16 @@
 # 🌿 **PersonaBot**  
 An interactive AI-powered mental wellness platform built by **Team Draco 🐉** for the **"PersonaBot: AI-Driven User Profiling"** problem statement at **ICTC 3.0**.  
 
+## Setup
+
+- Run `pip install -r requirements.txt`
+- Setup the MySQL database `Outputs/Databases/database.sql`
+- Setup the MySQL credentials in `web_app/user_site/.streamlit/secrets.toml` and `backend/.streamlit/secrets.toml`
+- Setup Ollama and run:
+   - `ollama pull llama3.1`
+   - `ollama pull llama3.2`
+   - `ollama pull hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K`
+
 ## 🚀 **Key Features**  
 
 ✅ **Empathetic & Inquisitive Therapy Experience**  
@@ -109,12 +119,3 @@ Displays **real-time visualizations** of the individual’s **mental health tren
 ![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)
 
 
-## Setup
-
-- Run `pip install -r requirements.txt`
-- Setup the MySQL database `Outputs/Databases/database.sql`
-- Setup the MySQL credentials in `web_app/user_site/.streamlit/secrets.toml` and `backend/.streamlit/secrets.toml`
-- Setup Ollama and run:
-   - `ollama pull llama3.1`
-   - `ollama pull llama3.2`
-   - `ollama pull hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K`
