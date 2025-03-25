@@ -80,9 +80,9 @@ else:
  
     if st.session_state.state == 'init':
         buttons = {
-            'Anxiety Help':'I am feeling anxious lately, could you please help me',
-            'Sleeping Issues':'I have been unable to sleep properly. How can i address this issue',
-            'Eating difficulties':'I have been facing issues with eating lately. Could you help me find the root cause?'
+            'Anxiety Help':   'I have been feeling anxious lately, could you please help me?',
+            'Sleep Problems': 'I have been unable to sleep properly. How can I fix this?',
+            'Eating Issues':  'I have been facing issues with eating lately. Could you help me find the root cause?',
         }
     
         cols = st.columns([2] * len(buttons.keys()))
