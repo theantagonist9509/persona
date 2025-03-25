@@ -87,7 +87,10 @@ Generates **concise summaries** for each user, assisting counselors in the **dia
 Displays **real-time visualizations** of the individual’s **mental health trends**, allowing experts to track psychological patterns.  
 
 ### **Dashboard Preview** 
+
 ![image](https://github.com/user-attachments/assets/fcc45748-3b7e-4935-8b70-9a35f8623b26)
+
+![image](https://github.com/user-attachments/assets/1e783bb2-bc16-46a2-937a-fb96d7562c46)
 
 ![Dashboard Overview](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)  
 
