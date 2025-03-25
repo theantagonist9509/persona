@@ -1,51 +1,76 @@
-# PersonaBot
-An interactive AI-powered mental wellness platform. Made by Team Draco 🐉 for the “PersonaBot: AI-Driven User Profiling" problem statement at ICTC 3.0.
+# **PersonaBot**  
+An interactive AI-powered mental wellness platform built by **Team Draco 🐉** for the **"PersonaBot: AI-Driven User Profiling"** problem statement at **ICTC 3.0**.  
 
-# Features
-## Empathetic and inquistive therapy experiance
-1) We use a 10.7B parameter model which has been fine tuned on over 99K mental-health conversations to create a better user experience. 
-2) The platform asks inquistive questions in a friendly manner to help the user reveal more about his/her problems
-3) Additional features, such as voice-over and counsellor support are also present.
-4) The UI has been created with real feed-back from the IIT Patna student community to cater to their needs
+## **Key Features**  
+
+✅ **Empathetic & Inquisitive Therapy Experience**  
+Our AI model, with **10.7 billion parameters**, has been fine-tuned on **99,000+ mental health conversations** to provide a supportive and insightful user experience.  
+
+✅ **Engaging & Friendly Conversations**  
+PersonaBot asks thoughtful, **inquisitive questions** in a natural and friendly manner, encouraging users to open up about their concerns.  
+
+✅ **Voice & Human Support Options**  
+Users can access **voice-over support** and connect with professional counselors for additional guidance.  
+
+✅ **User-Centric Design**  
+The platform's **UI is designed with real feedback** from **IIT Patna students**, ensuring a seamless and user-friendly experience tailored to their needs.  
 
    
 <img width="959" alt="image" src="https://github.com/user-attachments/assets/c71fd11b-cf13-44f5-82a2-7dc430e5230b" />
 
-## Smart Inferencing System to detect potential disorders
-1) The inferencing system can analyze each line of the user to detect possible mental health issues.
-2) Uses a bi-agent system in order to increase the accuracy of each prediction
-3) The Platform can currently label each message as
-   * Normal
-   * Eating disorders
-   * Addiction
-   * Emotional Issues
-   * ADHD
-   * Anxiety
-   * Autism
-   * Bipolar Disorder
-   * Depression
-   * Anxiety
-   * Loneliness
-   * PTSD
-   * Schizophrenia
-   * Extreme Issues
-   
-4) This program runs in the background and can provide valuable insights for the counsellor
-   <img width="842" alt="image" src="https://github.com/user-attachments/assets/059fb17e-5deb-4b82-89e0-7231539337a3" />
-   Sample output of the Inferencer Program
+## **Smart Inferencing System for Detecting Potential Disorders**  
 
-(Models:-https://huggingface.co/tahaenesaslanturk/mental-health-classification-v0.1 , llama 3.1) 
+### **How It Works**  
+1️⃣ The inferencing system **analyzes each user message** to detect potential mental health issues.  
+2️⃣ Utilizes a **bi-agent system** to enhance prediction accuracy.  
+3️⃣ The platform can **classify each message** into one of the following categories:  
+   - **Normal**  
+   - **Eating Disorders**  
+   - **Addiction**  
+   - **Emotional Issues**  
+   - **ADHD**  
+   - **Anxiety**  
+   - **Autism**  
+   - **Bipolar Disorder**  
+   - **Depression**  
+   - **Loneliness**  
+   - **PTSD**  
+   - **Schizophrenia**  
+   - **Extreme Issues**  
+
+4️⃣ This system **runs in the background** and provides **valuable insights for counselors** to better understand user concerns.  
+
+### **Sample Output of the Inferencing Program**  
+![Sample Output](https://github.com/user-attachments/assets/059fb17e-5deb-4b82-89e0-7231539337a3)  
+
+### **Models Used**  
+- [Mental Health Classification Model v0.1](https://huggingface.co/tahaenesaslanturk/mental-health-classification-v0.1)  
+- **LLaMA 3.1**  
+
+
 
 ## Effective profiling mechanism
 
-## Counsellor Dashboard
-1) An interactive counsellor dashboard to help mental-wellness experts track the overall well-being of the student community
-2) Gives a profile for each user along with citations to help the counsellor better understand the student
-3) Generates a short summary for each user to assist in diagnosis
-4) Displays graphs showing the overall mental state and psycological trends
-   ![image](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)
+## **Counsellor Dashboard**  
 
-   <img width="959" alt="image" src="https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169" />
+### **Key Features**  
+✅ **Interactive Dashboard**  
+Provides mental wellness experts with a **comprehensive view** of the student community’s overall well-being.  
+
+✅ **User Profiles with Citations**  
+Each user has a **detailed profile** along with **relevant citations** to help counselors better understand individual cases.  
+
+✅ **Automated Summaries**  
+Generates **concise summaries** for each user, assisting counselors in the **diagnostic process**.  
+
+✅ **Psychological Trends & Graphs**  
+Displays **real-time visualizations** of the individual’s **mental health trends**, allowing experts to track psychological patterns.  
+
+### **Dashboard Preview**  
+![Dashboard Overview](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)  
+
+![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)  
+
 
 
 
