@@ -28,6 +28,9 @@ The platform's **UI is designed with real feedback** from **IIT Patna students**
    
 <img width="959" alt="image" src="https://github.com/user-attachments/assets/c71fd11b-cf13-44f5-82a2-7dc430e5230b" />
 
+### **Models Used** 
+https://huggingface.co/victunes/TherapyBeagle-11B-v2-GGUF
+
 ## 💡 **Smart Inferencing System for Detecting Potential Disorders**  
 
 ### ⚙️ **How It Works**  
