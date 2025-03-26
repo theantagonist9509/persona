@@ -14,7 +14,7 @@ An interactive AI-powered mental wellness platform built by **Team Draco 🐉** 
 ## 🚀 **Key Features**  
 
 ✅ **Empathetic & Inquisitive Therapy Experience**  
-Our AI model, with **10.7 billion parameters**, has been fine-tuned on **99,000+ mental health conversations** to provide a supportive and insightful user experience.  
+The AI model, with **10.7 billion parameters**, has been fine-tuned on **99,000+ mental health conversations** to provide a supportive and insightful user experience.  
 
 ✅ **Engaging & Friendly Conversations**  
 PersonaBot asks thoughtful, **inquisitive questions** in a natural and friendly manner, encouraging users to open up about their concerns.  
