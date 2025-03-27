@@ -122,6 +122,7 @@ Displays **real-time visualizations** of the individual’s **mental health tren
 ![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)
 
 ## 📈 Results
-Inferencer Accuracy
+Message Inferencer Accuracy
+
 <img width="662" alt="image" src="https://github.com/user-attachments/assets/ab79e0ae-7587-4b20-88cb-6beda6efa52c" />
 
