@@ -124,8 +124,8 @@ Displays **real-time visualizations** of the individual’s **mental health tren
 ## 📈 Results
 ### Message Inferencer Accuracy
 
-**Accuracy of classification =  69.35**
+**Accuracy of classification =  69.35%**
 
-**Accuracy of finding whether disorder is present or not = 98.387**
+**Accuracy of finding whether disorder is present or not = 98.387%**
 
 
