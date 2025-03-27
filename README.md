@@ -121,4 +121,11 @@ Displays **real-time visualizations** of the individual’s **mental health tren
 
 ![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)
 
+## 📈 Results
+### Message Inferencer Accuracy
+
+**Accuracy of classification =  69.35**
+
+**Accuracy of finding whether disorder is present or not = 98.387**
+
 
