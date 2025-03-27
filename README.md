@@ -124,5 +124,6 @@ Displays **real-time visualizations** of the individual’s **mental health tren
 ## 📈 Results
 Message Inferencer Accuracy
 
-<img width="662" alt="image" src="https://github.com/user-attachments/assets/ab79e0ae-7587-4b20-88cb-6beda6efa52c" />
+<img width="625" alt="image" src="https://github.com/user-attachments/assets/a98c99da-2f45-4413-b520-eaf9d852e789" />
+
 
