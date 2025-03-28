@@ -26,7 +26,8 @@ Users can access **voice-over support** and connect with professional counselors
 The platform's **UI is designed with real feedback** from **IIT Patna students**, ensuring a seamless and user-friendly experience tailored to their needs.  
 
    
-<img width="959" alt="image" src="https://github.com/user-attachments/assets/c71fd11b-cf13-44f5-82a2-7dc430e5230b" />
+![image](https://github.com/user-attachments/assets/3542017e-a028-41fa-820c-00f8af60a34c)
+
 
 ### **Model Used** 
 https://huggingface.co/victunes/TherapyBeagle-11B-v2-GGUF
