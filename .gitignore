@@ -1,4 +1,4 @@
-venv/
 secrets.toml
-chroma/
+.venv/
+**/__pycache__/
 user-tts/

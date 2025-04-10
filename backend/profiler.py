@@ -13,9 +13,10 @@ embedder = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-bas
 
 llm = ChatOllama(
     model="llama3.2",
+    temperature=0.,
 )
 
-persistent_client = PersistentClient()
+persistent_client = PersistentClient(path="outputs/chroma")
 temp_client = EphemeralClient()
 
 def get_unprofiled_messages(uID, min_words, limit):
@@ -77,11 +78,11 @@ def update_profile(uID):
     except:
         pass
         
-    print(f"old_profile: {len(old_profile)}")
-    print(f"messages:    {len(messages)}")
+    print(f"old_profile : {len(old_profile)}")
+    print(f"messages    : {len(messages)}")
 
     new_profile = get_new_profile(old_profile, messages)
-    print(f"new_profile: {len(messages)}")
+    print(f"new_profile : {len(messages)}")
     
     combined_collection.add(
         ids=[str(uuid4()) for _ in messages],

@@ -1,134 +1,129 @@
-# 🌿 **Persona**  
-An interactive AI-powered mental wellness platform built by **Team Draco 🐉** for the **"PersonaBot: AI-Driven User Profiling"** problem statement at **ICTC 3.0**.  
+# 🌿 **Persona**
+
+An interactive, AI-powered mental wellness platform built by **Team Draco 🐉** for the **_PersonaBot: AI-Driven User Profiling_** problem statement at **ICTC 3.0**
+
+![image](media/ui/user.png)
 
 ## 🔧 Setup
 
-- Run `pip install -r requirements.txt`
-- Setup the MySQL database `Outputs/Databases/database.sql`
-- Setup the MySQL credentials in `web_app/user_site/.streamlit/secrets.toml` and `backend/.streamlit/secrets.toml`
+- Run `uv sync` to fetch the Python dependencies
+- Setup the MySQL database `outputs/database.sql`
+- Setup your MySQL credentials in `.streamlit/secrets.toml`
 - Setup Ollama and run:
    - `ollama pull llama3.1`
    - `ollama pull llama3.2`
    - `ollama pull hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K`
 
-## 🚀 **Key Features**  
+## 📖 Usage
 
-✅ **Empathetic & Inquisitive Therapy Experience**  
-The AI model, with **10.7 billion parameters**, has been fine-tuned on **99,000+ mental health conversations** to provide a supportive and insightful user experience.  
+### 🌐 Web Apps
 
-✅ **Engaging & Friendly Conversations**  
-PersonaBot asks thoughtful, **inquisitive questions** in a natural and friendly manner, encouraging users to open up about their concerns.  
+- `python web_app/user_site/main.py`
+- `python web_app/counsellor_site/main.py`
 
-✅ **Voice & Human Support Options**  
-Users can access **voice-over support** and connect with professional counselors for additional guidance.  
+### 🗄️ Backend Scripts
 
-✅ **User-Centric Design**  
-The platform's **UI is designed with real feedback** from **IIT Patna students**, ensuring a seamless and user-friendly experience tailored to their needs.  
+- `python backend/profiler.py`
+- `python backend/inferencer.py`
 
-   
-![image](https://github.com/user-attachments/assets/3542017e-a028-41fa-820c-00f8af60a34c)
+## 🚀 **Key Features**
 
+✅ **Empathetic & Inquisitive Therapy Experience**
+The AI model, with **11B parameters**, has been fine-tuned on **~100,000 mental health conversations** to provide a supportive and insightful user experience.
 
-### **Model Used** 
-https://huggingface.co/victunes/TherapyBeagle-11B-v2-GGUF
+✅ **Engaging & Friendly Conversations**
+PersonaBot asks thoughtful, **inquisitive questions** in a natural and friendly manner, encouraging users to open up about their concerns.
 
-## 💡 **Smart Inferencing System for Detecting Potential Disorders**  
-![Inferencer Flowchart](Flowcharts/inferencer-flowchart.png)
+✅ **Voice & Human Support Options**
+Users can access **voice-over support** and connect with professional counselors for additional guidance.
 
-### ⚙️ **How It Works**  
-✅ The inferencing system **analyzes each user message** to detect potential mental health issues.  
-✅ Utilizes a **bi-agent system** to enhance prediction accuracy.  
-✅ The platform can **classify each message** into one of the following categories:  
-   - **Normal**  
-   - **Eating Disorders**  
-   - **Addiction**  
-   - **Emotional Issues**  
-   - **ADHD**  
-   - **Anxiety**  
-   - **Autism**  
-   - **Bipolar Disorder**  
-   - **Depression**  
-   - **Loneliness**  
-   - **PTSD**  
-   - **Schizophrenia**  
-   - **Extreme Issues**  
+✅ **User-Centric Design**
+The platform's **UI is designed with real feedback** from **IIT Patna students**, ensuring a seamless and user-friendly experience tailored to their needs.
 
-✅ This system **runs in the background** and provides **valuable insights for counselors** to better understand user concerns.  
-
-### **Sample Output of the Inferencing Program**  
-![Sample Output](https://github.com/user-attachments/assets/059fb17e-5deb-4b82-89e0-7231539337a3)  
-
-### **Models Used**  
-- [Mental Health Classification Model v0.1](https://huggingface.co/tahaenesaslanturk/mental-health-classification-v0.1)  
-- **LLaMA 3.1**  
-
-## 🎯 Profile Generation Pipeline
-![Profile Generation Pipeline](Flowcharts/profiler-flowchart.png)
+## 👥 Profile Generation Pipeline
 
 We implement a precise yet efficient user profiling system for the therapeutic chatbot, utilizing a unique citation generation mechanism.
 
+![Profile Generation Pipeline](media/flows/profiler.png)
+
 ### 🚀 Key Features:
+
 ✅ Automatically fetches unprofiled user messages from the chat database
 
 ✅ Updates existing user profiles with information from unprocessed messages using a summarization agent (LLM)
 
+✅ Marks profiled messages in the database to prevent redundant updates
+
 ✅ Implements a unique citation generation mechanism that employs semantic similarity scores to propagate citations across profile updates over time
 
+✅ Can be run as a standalone script to update profiles for select (or all) users
+
 ### 💡 Two-Phase Workflow:
+
 1. Summarizer Agent:
 
-   ✅ Employs a ChatOllama model to summarize user messages while augmenting them with the existing profile
-   
-   ✅ Generates concise, non-repetitive summaries of all user information till-date
+   - Employs a ChatOllama model to summarize user messages while augmenting them with the existing profile
 
+   - Generates concise, non-repetitive summaries of all user information till-date
 
 2. Citations Using Semantic Similarity:
 
-   ✅ Uses HuggingFace embeddings for semantic similarity scoring
-   
-   ✅ Stores embeddings from the persistent profile, and the newly-profiled messages into a combined in-memory ChromaDB collection for efficient querying
-   
-   ✅ Propagates chat message citations by finding the most similar messages to each profile point
-   
+   - Uses HuggingFace embeddings for semantic similarity scoring
 
-### ⭐ Usage
+   - Stores embeddings from the persistent profile, and the newly-profiled messages into a combined in-memory ChromaDB collection for efficient querying
 
-✅ Automatically updates user profiles based on new, unprofiled messages
+   - Propagates chat message citations by finding the most similar messages to each profile point
 
-✅ Marks profiled messages in the database to prevent redundant updates
+## 💡 **Smart Inferencing System for Detecting Potential Disorders**
 
-✅ Can be run as a standalone script to update profiles for all users
+The inferencing system efficiently performs a preliminary mental diagnosis of the user messages
 
-## 🤝 **Counsellor Dashboard**  
+![Inferencer Pipeline](media/flows/inferencer.png)
 
-### 🌟 **Key Features**  
-💻 **Interactive Dashboard:**  
-Provides mental wellness experts with a **comprehensive view** of the student community’s overall well-being.  
+### ⚙️ **How It Works**
 
-🔧 **User Profiles with Citations:**  
-Each user has a **detailed profile** along with **relevant citations** to help counselors better understand individual cases.  
+✅ Analyzes **each user message** to detect potential mental health issues
 
-🤖 **Automated Summaries:**  
-Generates **concise summaries** for each user, assisting counselors in the **diagnostic process**.  
+✅ Utilizes a **bi-agent system** to enhance prediction accuracy
 
-📊 **Psychological Trends & Graphs:**  
-Displays **real-time visualizations** of the individual’s **mental health trends**, allowing experts to track psychological patterns.
+✅ Can classify each message into one of **13 categories** including:
 
-### **Dashboard Preview** 
+   - **Loneliness**
+   - **Anxiety**
+   - **Depression**
+   - **Potential Self Harm**
 
-![image](https://github.com/user-attachments/assets/fcc45748-3b7e-4935-8b70-9a35f8623b26)
+✅  **Runs in the background** and provides **valuable insights for counselors** to better understand user concerns
 
-![image](https://github.com/user-attachments/assets/0700bcbb-c675-41d7-8e67-571ea1023c37)
+### › **Sample Output of the Inferencing Program**
 
-![Dashboard Overview](https://github.com/user-attachments/assets/2f9ff38d-8d8b-4ec9-93ad-0f75df25bb21)  
+![Sample Output](media/inferencer-output.png)
 
-![Mental Health Trends](https://github.com/user-attachments/assets/0d553b3c-771b-4533-9882-dce273737169)
+### 📈 Evaluations
 
-## 📈 Results
-### Message Inferencer Accuracy
+- Accuracy of classification: **69.4%**
+- Accuracy of finding whether a disorder is present: **98.4%**
 
-**Accuracy of classification =  69.35%**
+## 🤝 **Counsellor Dashboard**
 
-**Accuracy of finding whether disorder is present or not = 98.387%**
+### 🌟 **Key Features**
 
+💻 **Interactive Dashboard:**
+Provides mental wellness experts with a **comprehensive view** of the student community’s overall well-being
 
+🔧 **User Profiles with Citations:**
+Each user has a **detailed profile** along with **relevant citations** to help counselors better understand individual cases
+
+🤖 **Automated Summaries:**
+Generates **concise summaries** for each user, assisting counselors in the **diagnostic process**
+
+📊 **Psychological Trends & Graphs:**
+Displays **real-time visualizations** of the individual’s **mental health trends**, allowing experts to track psychological patterns
+
+![User Profile](media/ui/counsellor-1.png)
+
+![Urgent User Profile](media/ui/counsellor-2.png)
+
+![Mental State Map](media/ui/counsellor-3.png)
+
+![Mental State Trends](media/ui/counsellor-4.png)

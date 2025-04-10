@@ -1,0 +1,19 @@
+[project]
+name = "persona"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate", # dependency issue in hf transformers
+    "chromadb",
+    "cryptography",
+    "edge-tts",
+    "matplotlib",
+    "mysql-connector-python",
+    "langchain-community",
+    "langchain-core",
+    "langchain-huggingface",
+    "langchain-ollama",
+    "scipy",
+    "sentence-transformers",
+    "streamlit",
+]

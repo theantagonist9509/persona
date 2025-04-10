@@ -3,6 +3,8 @@ from langchain_core.messages import AIMessage, HumanMessage
 import streamlit as st
 import edge_tts
 import asyncio
+import os
+
 from mysql_wrapper import *
 
 #llm = ChatOllama(model="hf.co/victunes/TherapyBeagle-11B-v2-GGUF:Q2_K",temperature=0.1)
@@ -30,6 +32,7 @@ def create_conversation(prompt):
     conn.commit()
 
 async def generate_speech(text):
+    os.makedirs("user-tts", exist_ok=True)
     output_file = f"user-tts/{st.session_state.cID}.mp3"
     tts = edge_tts.Communicate(text, st.session_state.voice)
     await tts.save(output_file)
